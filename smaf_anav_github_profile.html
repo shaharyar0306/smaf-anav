@@ -1,0 +1,260 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: transparent; }
+  .wrap { font-family: 'Share Tech Mono', monospace; padding: 1rem 0; }
+
+  .tabs { display: flex; gap: 4px; margin-bottom: 0; }
+  .tab { padding: 8px 18px; font-size: 12px; border-radius: 6px 6px 0 0; cursor: pointer; border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); color: var(--color-text-secondary); transition: all 0.2s; font-family: 'Share Tech Mono', monospace; }
+  .tab.active { background: #0d1117; color: #58a6ff; border-bottom: 0.5px solid #0d1117; }
+
+  .panel { display: none; border-radius: 0 8px 8px 8px; border: 0.5px solid var(--color-border-tertiary); overflow: hidden; }
+  .panel.active { display: block; }
+
+  /* README panel */
+  .readme-wrap { background: #0d1117; color: #c9d1d9; padding: 0; }
+  .readme-header { background: #161b22; border-bottom: 0.5px solid #30363d; padding: 12px 20px; display: flex; align-items: center; gap: 10px; }
+  .readme-header span { color: #58a6ff; font-size: 13px; }
+  .readme-body { padding: 20px; font-size: 13px; line-height: 1.7; }
+
+  .banner { background: #0d1117; border: 0.5px solid #21262d; border-radius: 6px; padding: 16px; margin-bottom: 16px; text-align: center; }
+  .banner pre { color: #3fb950; font-size: 9px; line-height: 1.3; overflow: hidden; }
+  .banner-sub { color: #58a6ff; font-size: 12px; margin-top: 8px; }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+  .badge { border-radius: 4px; padding: 3px 10px; font-size: 11px; font-weight: 500; font-family: sans-serif; }
+  .b-blue { background: #1f6feb; color: #cae8ff; }
+  .b-gray { background: #30363d; color: #8b949e; }
+  .b-green { background: #1a7f37; color: #aff5b4; }
+  .b-yellow { background: #9e6a03; color: #ffd9a3; }
+  .b-bright { background: #2ea043; color: #fff; }
+
+  .readme-h2 { color: #58a6ff; font-size: 15px; border-bottom: 0.5px solid #21262d; padding-bottom: 6px; margin: 18px 0 10px; font-family: 'Orbitron', monospace; letter-spacing: 1px; }
+  .readme-h3 { color: #79c0ff; font-size: 13px; margin: 14px 0 6px; }
+
+  .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+  .feat-card { background: #161b22; border: 0.5px solid #21262d; border-radius: 6px; padding: 10px 12px; }
+  .feat-icon { font-size: 16px; margin-bottom: 4px; }
+  .feat-title { color: #e6edf3; font-size: 12px; font-weight: 500; font-family: sans-serif; }
+  .feat-desc { color: #8b949e; font-size: 11px; margin-top: 2px; font-family: sans-serif; }
+
+  .code-block { background: #161b22; border: 0.5px solid #30363d; border-radius: 6px; padding: 12px; font-size: 12px; margin: 8px 0; overflow-x: auto; }
+  .code-block .kw { color: #ff7b72; }
+  .code-block .str { color: #a5d6ff; }
+  .code-block .cmt { color: #8b949e; }
+  .code-block .ok { color: #3fb950; }
+  .code-block .info { color: #58a6ff; }
+
+  .family-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid #21262d; }
+  .fam-num { color: #3fb950; font-size: 12px; width: 24px; }
+  .fam-name { color: #e6edf3; font-size: 12px; flex: 1; font-family: sans-serif; }
+  .fam-desc { color: #8b949e; font-size: 11px; font-family: sans-serif; }
+  .conf-low { background: #3d1f00; color: #ffa657; border-radius: 3px; padding: 2px 7px; font-size: 10px; }
+  .conf-med { background: #1f3a1f; color: #3fb950; border-radius: 3px; padding: 2px 7px; font-size: 10px; }
+
+  .disclaimer { background: #1f1d1a; border-left: 3px solid #d29922; padding: 10px 14px; border-radius: 0 4px 4px 0; margin: 12px 0; }
+  .disclaimer p { color: #d29922; font-size: 11px; font-family: sans-serif; line-height: 1.6; }
+
+  /* GITIGNORE panel */
+  .gi-wrap { background: #0d1117; color: #c9d1d9; }
+  .gi-header { background: #161b22; border-bottom: 0.5px solid #30363d; padding: 12px 20px; display: flex; align-items: center; gap: 10px; }
+  .gi-body { padding: 20px; font-size: 12px; line-height: 1.9; }
+  .gi-section { margin-bottom: 16px; }
+  .gi-comment { color: #3fb950; }
+  .gi-pattern { color: #ffa657; }
+  .gi-py { color: #79c0ff; }
+  .gi-os { color: #d2a8ff; }
+  .gi-tool { color: #ff7b72; }
+
+  /* LICENSE panel */
+  .lic-wrap { background: #0d1117; }
+  .lic-header { background: #161b22; border-bottom: 0.5px solid #30363d; padding: 12px 20px; }
+  .lic-body { padding: 24px; }
+  .lic-badge { display: inline-block; background: #1a7f37; color: #aff5b4; border-radius: 20px; padding: 4px 16px; font-size: 12px; margin-bottom: 16px; font-family: sans-serif; }
+  .lic-title { color: #e6edf3; font-size: 20px; font-family: 'Orbitron', monospace; margin-bottom: 6px; }
+  .lic-copy { color: #58a6ff; font-size: 13px; margin-bottom: 16px; font-family: sans-serif; }
+  .lic-text { color: #8b949e; font-size: 12px; line-height: 1.9; font-family: sans-serif; border: 0.5px solid #21262d; border-radius: 6px; padding: 16px; background: #161b22; }
+  .lic-highlight { color: #e6edf3; }
+</style>
+
+<div class="wrap">
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('readme')">📄 README.md</div>
+    <div class="tab" onclick="showTab('gitignore')">.gitignore</div>
+    <div class="tab" onclick="showTab('license')">LICENSE</div>
+  </div>
+
+  <!-- README -->
+  <div class="panel active" id="tab-readme">
+    <div class="readme-wrap">
+      <div class="readme-header">
+        <span>⚡ README.md</span>
+        <span style="color:#8b949e; margin-left:auto; font-size:11px;">SMAF ANAV v1.0</span>
+      </div>
+      <div class="readme-body">
+        <div class="banner">
+          <pre>
+ ███████╗███╗   ███╗ █████╗ ███████╗     █████╗ ███╗   ██╗ █████╗ ██╗   ██╗
+ ██╔════╝████╗ ████║██╔══██╗██╔════╝    ██╔══██╗████╗  ██║██╔══██╗██║   ██║
+ ███████╗██╔████╔██║███████║█████╗      ███████║██╔██╗ ██║███████║██║   ██║
+ ╚════██║██║╚██╔╝██║██╔══██║██╔══╝      ██╔══██║██║╚██╗██║██╔══██║╚██╗ ██╔╝
+ ███████║██║ ╚═╝ ██║██║  ██║██║         ██║  ██║██║ ╚████║██║  ██║ ╚████╔╝
+ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝         ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝</pre>
+          <div class="banner-sub">Static Malware Analysis Automation Framework — v1.0</div>
+        </div>
+
+        <div class="badges">
+          <span class="badge b-blue">Python 3.8+</span>
+          <span class="badge b-gray">Windows</span>
+          <span class="badge b-green">TrID | strings | FLOSS</span>
+          <span class="badge b-yellow">MIT License</span>
+          <span class="badge b-bright">Active</span>
+        </div>
+
+        <div class="readme-h2">🔍 Overview</div>
+        <p style="color:#8b949e; font-size:12px; font-family:sans-serif; line-height:1.7;">Python-based static malware analysis automation — runs PE executables through a multi-tool pipeline to extract actionable threat intelligence without executing the malware.</p>
+
+        <div class="readme-h2">✨ Features</div>
+        <div class="feat-grid">
+          <div class="feat-card"><div class="feat-icon">🔎</div><div class="feat-title">File Type Detection</div><div class="feat-desc">TrID signature matching with confidence %</div></div>
+          <div class="feat-card"><div class="feat-icon">📝</div><div class="feat-title">String Extraction</div><div class="feat-desc">ASCII + Unicode via strings.exe</div></div>
+          <div class="feat-card"><div class="feat-icon">🔓</div><div class="feat-title">FLOSS Deobfuscation</div><div class="feat-desc">Stack & decoded string recovery</div></div>
+          <div class="feat-card"><div class="feat-icon">🧬</div><div class="feat-title">Malware Family ID</div><div class="feat-desc">IOC signature database matching</div></div>
+          <div class="feat-card"><div class="feat-icon">🌐</div><div class="feat-title">URL Detection</div><div class="feat-desc">Embedded URLs & domains flagged</div></div>
+          <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-title">Dual Reports</div><div class="feat-desc">HTML + TXT output generated</div></div>
+        </div>
+
+        <div class="readme-h2">🚀 Usage</div>
+        <div class="code-block">
+          <span class="cmt"># Run the analyzer</span><br>
+          <span class="kw">python</span> analyzer.py <span class="str">TotalAware2.exe</span><br><br>
+          <span class="ok">✔</span> trid      → trid<br>
+          <span class="ok">✔</span> strings   → strings<br>
+          <span class="ok">✔</span> floss     → floss<br><br>
+          <span class="info">ℹ</span> Running TrID ...<br>
+          <span class="info">ℹ</span> Running strings.exe ...<br>
+          <span class="info">ℹ</span> Running FLOSS (this may take a moment) ...<br>
+          <span class="info">ℹ</span> Matching against malware signature database ...
+        </div>
+
+        <div class="readme-h2">🧬 Malware Families</div>
+        <div class="family-row"><span class="fam-num">#1</span><span class="fam-name">TotalAV_Rogue</span><span class="fam-desc">Rogue Antivirus / Scareware</span><span class="conf-low">LOW</span></div>
+        <div class="family-row"><span class="fam-num">#2</span><span class="fam-name">Generic_Keylogger</span><span class="fam-desc">Keyboard hook behavior</span><span class="conf-med">MEDIUM</span></div>
+        <div class="family-row"><span class="fam-num">#3</span><span class="fam-name">AgentTesla</span><span class="fam-desc">Info-stealer / Keylogger</span><span class="conf-low">LOW</span></div>
+
+        <div class="readme-h2">⚠️ Disclaimer</div>
+        <div class="disclaimer"><p>For educational and research purposes only. Run in isolated/sandboxed environments. Do NOT use on production machines.</p></div>
+
+        <div style="margin-top:16px; color:#8b949e; font-size:11px; text-align:center; font-family:sans-serif;">Built with ❤️ by <span style="color:#58a6ff;">Shaharyar Rabbani</span> · Pakistan 🇵🇰</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GITIGNORE -->
+  <div class="panel" id="tab-gitignore">
+    <div class="gi-wrap">
+      <div class="gi-header">
+        <span style="color:#58a6ff; font-size:13px;">🛡️ .gitignore</span>
+        <span style="color:#8b949e; margin-left:auto; font-size:11px;">Protects sensitive files from being uploaded</span>
+      </div>
+      <div class="gi-body">
+        <div class="gi-section">
+          <div class="gi-comment"># ═══════════════════════════════════════════</div>
+          <div class="gi-comment">#  SMAF ANAV — .gitignore</div>
+          <div class="gi-comment"># ═══════════════════════════════════════════</div>
+        </div>
+        <div class="gi-section">
+          <div class="gi-comment"># ⚠️  Malware Samples — NEVER commit these</div>
+          <div class="gi-pattern">*.exe</div>
+          <div class="gi-pattern">*.dll</div>
+          <div class="gi-pattern">*.malz</div>
+          <div class="gi-pattern">*.mal</div>
+          <div class="gi-pattern">*.sample</div>
+          <div class="gi-pattern">samples/</div>
+        </div>
+        <div class="gi-section">
+          <div class="gi-comment"># 📊  Generated Reports</div>
+          <div class="gi-pattern">reports/</div>
+          <div class="gi-pattern">malware_analysis_*.txt</div>
+          <div class="gi-pattern">malware_analysis_*.html</div>
+        </div>
+        <div class="gi-section">
+          <div class="gi-comment"># 🔧  External Tool Binaries</div>
+          <div class="gi-tool">trid.exe</div>
+          <div class="gi-tool">triddefs.trd</div>
+          <div class="gi-tool">strings.exe</div>
+          <div class="gi-tool">strings64.exe</div>
+          <div class="gi-tool">floss.exe</div>
+        </div>
+        <div class="gi-section">
+          <div class="gi-comment"># 🐍  Python</div>
+          <div class="gi-py">__pycache__/</div>
+          <div class="gi-py">*.py[cod]</div>
+          <div class="gi-py">*.pyo</div>
+          <div class="gi-py">venv/</div>
+          <div class="gi-py">.venv/</div>
+          <div class="gi-py">dist/</div>
+          <div class="gi-py">build/</div>
+        </div>
+        <div class="gi-section">
+          <div class="gi-comment"># 💻  OS Files</div>
+          <div class="gi-os">.DS_Store</div>
+          <div class="gi-os">Thumbs.db</div>
+          <div class="gi-os">desktop.ini</div>
+        </div>
+        <div class="gi-section">
+          <div class="gi-comment"># 📝  Logs</div>
+          <div class="gi-os">*.log</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LICENSE -->
+  <div class="panel" id="tab-license">
+    <div class="lic-wrap">
+      <div class="lic-header" style="display:flex; align-items:center; gap:10px;">
+        <span style="color:#58a6ff; font-size:13px; font-family:'Share Tech Mono',monospace;">⚖️ LICENSE</span>
+        <span style="color:#8b949e; margin-left:auto; font-size:11px; font-family:'Share Tech Mono',monospace;">MIT — Open Source</span>
+      </div>
+      <div class="lic-body">
+        <div class="lic-badge">MIT License</div>
+        <div class="lic-title">Open Source</div>
+        <div class="lic-copy">Copyright © 2026 Shaharyar Rabbani</div>
+        <div class="lic-text">
+          Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the <span class="lic-highlight">"Software"</span>), to deal in the Software without restriction, including without limitation the rights to <span class="lic-highlight">use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span> copies of the Software...<br><br>
+          The above copyright notice and this permission notice shall be included in <span class="lic-highlight">all copies or substantial portions</span> of the Software.<br><br>
+          THE SOFTWARE IS PROVIDED <span class="lic-highlight">"AS IS"</span>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. The author takes <span class="lic-highlight">no responsibility for misuse</span> of this tool. Always follow responsible disclosure and applicable laws.
+        </div>
+        <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+          <div style="background:#161b22; border:0.5px solid #21262d; border-radius:6px; padding:10px 16px; text-align:center; flex:1;">
+            <div style="color:#3fb950; font-size:18px; font-family:'Share Tech Mono',monospace;">✔</div>
+            <div style="color:#e6edf3; font-size:11px; margin-top:4px; font-family:sans-serif;">Commercial use</div>
+          </div>
+          <div style="background:#161b22; border:0.5px solid #21262d; border-radius:6px; padding:10px 16px; text-align:center; flex:1;">
+            <div style="color:#3fb950; font-size:18px; font-family:'Share Tech Mono',monospace;">✔</div>
+            <div style="color:#e6edf3; font-size:11px; margin-top:4px; font-family:sans-serif;">Modification</div>
+          </div>
+          <div style="background:#161b22; border:0.5px solid #21262d; border-radius:6px; padding:10px 16px; text-align:center; flex:1;">
+            <div style="color:#3fb950; font-size:18px; font-family:'Share Tech Mono',monospace;">✔</div>
+            <div style="color:#e6edf3; font-size:11px; margin-top:4px; font-family:sans-serif;">Distribution</div>
+          </div>
+          <div style="background:#161b22; border:0.5px solid #21262d; border-radius:6px; padding:10px 16px; text-align:center; flex:1;">
+            <div style="color:#ff7b72; font-size:18px; font-family:'Share Tech Mono',monospace;">✘</div>
+            <div style="color:#e6edf3; font-size:11px; margin-top:4px; font-family:sans-serif;">Liability</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
