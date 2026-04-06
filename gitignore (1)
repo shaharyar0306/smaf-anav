@@ -1,0 +1,57 @@
+# ============================================================
+#  SMAF ANAV — .gitignore
+# ============================================================
+
+# --- Malware Samples (NEVER commit actual malware) ---
+*.exe
+*.dll
+*.bin
+*.malz
+*.mal
+*.sample
+samples/
+
+# --- Generated Reports ---
+reports/
+malware_analysis_*.txt
+malware_analysis_*.html
+
+# --- External Tool Binaries ---
+tools/
+trid.exe
+triddefs.trd
+strings.exe
+strings64.exe
+strings64a.exe
+floss.exe
+floss
+TotalAware*.exe
+Rams*.exe
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs ---
+*.log
